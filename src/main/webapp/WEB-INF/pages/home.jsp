@@ -9,4 +9,3 @@
         <p><fmt:message key="wellcome.text"/></p>
     </div>
 </div>
-

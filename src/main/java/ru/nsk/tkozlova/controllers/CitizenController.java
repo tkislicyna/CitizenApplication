@@ -5,6 +5,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.nsk.tkozlova.model.Citizen;
@@ -27,10 +28,16 @@ public class CitizenController {
     @Autowired
     MessageSource messageSource;
 
-    @RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
-    public String getCitizens(Model model) {
+    @RequestMapping(value = { "/"}, method = RequestMethod.GET)
+    public String homePage(ModelMap model) {
+        return "home";
+    }
+
+    @RequestMapping(value = { "/list"}, method = RequestMethod.GET)
+    public String listPage(ModelMap model) {
         List<Citizen> citizens = this.service.findAllCitizens();
         model.addAttribute("citizens", citizens);
-        return "index";
+        return "list";
     }
+
 }

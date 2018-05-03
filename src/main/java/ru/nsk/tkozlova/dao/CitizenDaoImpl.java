@@ -26,7 +26,7 @@ public class CitizenDaoImpl extends AbstractDao<Integer, Citizen> implements Cit
 
     @Override
     public void deleteCitizenById(int id) {
-        Query query = getSession().createSQLQuery("delete from Employee where id = :id");
+        Query query = getSession().createSQLQuery("delete from citizens where id = :id");
         query.setInteger("id", id);
         query.executeUpdate();
     }
