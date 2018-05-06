@@ -3,6 +3,7 @@ package ru.nsk.tkozlova.dao;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
 import ru.nsk.tkozlova.model.IdentityDocument;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  * @project CitizenApplication
  * @autor Toma on 4/26/2018.
  */
+@Repository("documentDaoImpl")
 public class DocumentDaoImpl extends AbstractDao<Integer, IdentityDocument> implements DocumentDao{
     @Override
     public IdentityDocument findById(int id) {

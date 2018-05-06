@@ -1,8 +1,9 @@
 package ru.nsk.tkozlova.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.nsk.tkozlova.dao.DocumentDao;
-import ru.nsk.tkozlova.model.Citizen;
 import ru.nsk.tkozlova.model.IdentityDocument;
 
 import javax.swing.text.Document;
@@ -12,6 +13,8 @@ import java.util.List;
  * @project CitizenApplication
  * @autor Toma on 4/26/2018.
  */
+@Service("documentService")
+@Transactional
 public class DocumentServiceImpl implements DocumentService {
 
     @Autowired

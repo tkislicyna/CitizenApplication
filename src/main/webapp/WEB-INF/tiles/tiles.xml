@@ -26,5 +26,52 @@
         <put-attribute name="body" value="/WEB-INF/pages/list.jsp" />
     </definition>
 
+    <!-- About Page -->
+    <definition name="about" extends="base-definition">
+        <put-attribute name="title" value="About" />
+        <put-attribute name="body" value="/WEB-INF/pages/about.jsp" />
+    </definition>
+
+    <definition name="citizen/view" extends="base-definition">
+        <put-attribute name="title" value="Citizen" />
+        <put-attribute name="body" value="/WEB-INF/pages/citizen.jsp" />
+    </definition>
+
+    <definition name="citizen/update" extends="base-definition">
+        <put-attribute name="title" value="Citizen" />
+        <put-attribute name="body" value="/WEB-INF/pages/citizenForm.jsp" />
+    </definition>
+
+
+    <definition name="citizen/add" extends="base-definition">
+        <put-attribute name="title" value="Citizen" />
+        <put-attribute name="body" value="/WEB-INF/pages/citizenForm.jsp" />
+    </definition>
+
+    <definition name="citizen/form" extends="base-definition">
+        <put-attribute name="title" value="Citizen" />
+        <put-attribute name="body" value="/WEB-INF/pages/citizenForm.jsp" />
+    </definition>
+
+    <definition name="document/view" extends="base-definition">
+        <put-attribute name="title" value="Document" />
+        <put-attribute name="body" value="/WEB-INF/pages/document.jsp" />
+    </definition>
+
+    <definition name="document/add" extends="base-definition">
+        <put-attribute name="title" value="Document" />
+        <put-attribute name="body" value="/WEB-INF/pages/documentForm.jsp" />
+    </definition>
+
+    <definition name="document/update" extends="base-definition">
+        <put-attribute name="title" value="Document" />
+        <put-attribute name="body" value="/WEB-INF/pages/documentForm.jsp" />
+    </definition>
+
+    <definition name="document/form" extends="base-definition">
+        <put-attribute name="title" value="Document" />
+        <put-attribute name="body" value="/WEB-INF/pages/documentForm.jsp" />
+    </definition>
+
 
 </tiles-definitions>

@@ -1,47 +1,60 @@
-package ru.nsk.tkozlova.model;
+package ru.nsk.tkozlova.controllers.model;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import ru.nsk.tkozlova.model.Citizen;
+import ru.nsk.tkozlova.model.DocumentType;
+
 import javax.persistence.*;
 import java.util.Date;
 
 /**
  * @project CitizenApplication
- * @autor Toma on 4/26/2018.
+ * @autor Toma on 5/4/2018.
  */
-@Entity
-@Table (name = "documents")
-public class IdentityDocument {
-    @Id
-    @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class DocumentModel {
+
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "holder_id", nullable = false)
-    private Citizen holder;
+    private CitizenModel holder = new CitizenModel();
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type")
     private DocumentType type;
 
-    @Column(name = "authority")
     private  String authority;
 
-    @Column(name = "issue_date")
-    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date issueDate;
 
-    @Column(name = "expiry_date")
-    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date expiryDate;
+
+    public DocumentModel() {}
+
+    public DocumentModel (CitizenModel citizenModel) {
+        holder = citizenModel;
+    }
+
+    public DocumentModel (Integer id, DocumentType type){
+        this.id = id;
+        this.type = type;
+    }
 
     public Integer getId() {
         return id;
     }
 
-   public Citizen getHolder() {
+    public boolean isNew() {
+        return (this.id == null);
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public CitizenModel getHolder() {
         return holder;
     }
 
-    public void setHolder(Citizen holder) {
+    public void setHolder(CitizenModel holder) {
         this.holder = holder;
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
  * @project CitizenApplication
  * @autor Toma on 4/26/2018.
  */
-@Service("employeeService")
+@Service("сitizenService")
 @Transactional
 public class CitizenServiceImpl implements CitizenService {
 
