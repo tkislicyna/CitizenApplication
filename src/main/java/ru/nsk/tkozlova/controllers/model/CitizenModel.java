@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Past;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +30,8 @@ public class CitizenModel {
 
     private String fullName;
 
-    public CitizenModel() {}
+    public CitizenModel() {
+    }
 
     public CitizenModel(Integer id, String fullName) {
         this.id = id;

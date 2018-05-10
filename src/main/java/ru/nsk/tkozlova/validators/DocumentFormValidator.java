@@ -41,5 +41,10 @@ public class DocumentFormValidator implements Validator {
         } else if (documentModel.getAuthority().length() > MAX_LENGTH_TEXT) {
             errors.rejectValue("authority", "valid.document_form.authority");
         }
+
+        if(documentModel.getIssueDate()  != null && documentModel.getExpiryDate() != null &&
+        !documentModel.getIssueDate().before(documentModel.getExpiryDate())) {
+            errors.rejectValue("expiryDate", "valid.document_form.date_interval");
+        }
     }
 }

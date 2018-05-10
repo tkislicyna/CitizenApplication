@@ -18,4 +18,6 @@ public interface CitizenService {
     void deleteCitizenById(Integer id);
 
     List<Citizen> findAllCitizens();
+
+    List<Citizen> findCitizensByKeyword(String word);
 }

@@ -33,7 +33,7 @@ public class CitizenFormValidator implements Validator {
         if (citizen.getFirstName() == null) {
             errors.rejectValue("firstName", "not_empty.citizen_form.first_name");
         } else if (citizen.getFirstName().length() > MAX_LENGTH_NAME) {
-            errors.rejectValue("firstName", "valid.citizen_form.firstName");
+            errors.rejectValue("firstName", "valid.citizen_form.first_name");
         }
         
         if (citizen.getMiddleName() == null) {
@@ -45,7 +45,7 @@ public class CitizenFormValidator implements Validator {
         if (citizen.getLastName() == null) {
             errors.rejectValue("lastName", "not_empty.citizen_form.last_name");
         } else if (citizen.getLastName().length() > MAX_LENGTH_NAME) {
-            errors.rejectValue("lastName", "valid.citizen_form.lastName");
+            errors.rejectValue("lastName", "valid.citizen_form.last_name");
         }
 
         if (citizen.getBirthDay() == null) {

@@ -4,20 +4,37 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<script>
+    $(document).ready(function(){
+        var issueDate=$('input[name="issueDate"]');
+        var expiryDate=$('input[name="expiryDate"]');
+
+        var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+        var options={
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        };
+        issueDate.datepicker(options);
+        expiryDate.datepicker(options);
+    })
+</script>
+
+<spring:htmlEscape defaultHtmlEscape="true" />
 
 <div class="container">
     <c:choose>
         <c:when test="${documentForm['new']}">
-            <legend><fmt:message key="document.add.title"/></legend>
+            <legend><h1><fmt:message key="document.add.title"/></h1></legend>
         </c:when>
         <c:otherwise>
-            <legend><fmt:message key="document.update.title"/></legend>
+            <legend><h1><fmt:message key="document.update.title"/></h1></legend>
         </c:otherwise>
     </c:choose>
 
     <spring:url value="/document" var="documentActionUrl" />
 
-    <form:form class="form-horizontal" method="post" modelAttribute="documentForm" action="${documentActionUrl}">
+    <form:form class="form-horizontal bootstrap-iso form" method="post" modelAttribute="documentForm" action="${documentActionUrl}">
 
         <form:hidden path="id" />
         <form:hidden path="holder.id" />
@@ -25,7 +42,7 @@
         <div class="row">
             <label class="col-sm-2"><fmt:message key="document.holder"/></label>
             <c:url var="holderLink"  value="/citizen/${documentForm.holder.id}/view" />
-            <div class="col-sm-10"><a href="${holderLink}">${documentForm.holder.fullName}</a></div>
+            <div class="col-sm-10"><a href="${holderLink}"><c:out value="${documentForm.holder.fullName}" escapeXml="true"/></a></div>
         </div>
 
         <c:choose>
@@ -33,10 +50,10 @@
                 <spring:bind path="type">
                     <div class="form-group ${status.error ? 'has-danger' : ''}">
                         <label><fmt:message key="document.type"/></label>
-                        <form:select path="type" class="form-control ${status.error ? 'is-invalid' : ''}">
+                        <form:select path="type" class="form-control ${status.error ? 'is-invalid' : ''}" >
                             <fmt:message key="document.select" var="noneOption"/>
                             <form:option value="" label="${noneOption}" disabled="true" selected="selected"/>
-                            <form:options items="${typeList}" />
+                             <form:options items="${typeList}" />
                         </form:select>
                         <form:errors path="type" class="invalid-feedback" />
                     </div>
@@ -56,8 +73,14 @@
             <div class="form-group ${status.error ? 'has-danger' : ''}">
                 <label for="issueDate"><fmt:message key="document.issue_date"/></label>
                 <fmt:message key="document.issue_date_placeholder" var="issueDatePlaceholder" />
-                <form:input path="issueDate" type="text" class="form-control ${status.error ? 'is-invalid' : ''}" id="issueDate" placeholder="${issueDatePlaceholder}" />
-                <form:errors path="issueDate" class="invalid-feedback" />
+
+                <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
+                    <form:input path="issueDate" type="text" class="form-control ${status.error ? 'is-invalid' : ''}" id="issueDate" placeholder="${issueDatePlaceholder}" />
+                    <form:errors path="issueDate" class="invalid-feedback" />
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
             </div>
         </spring:bind>
 
@@ -65,8 +88,14 @@
             <div class="form-group ${status.error ? 'has-danger' : ''}">
                 <label class="" for="expiryDate"><fmt:message key="document.expiry_date"/></label>
                 <fmt:message key="document.expiry_date_placeholder" var="expiryDatePlaceholder" />
-                <form:input path="expiryDate" type="text" class="form-control ${status.error ? 'is-invalid' : ''}" id="expiryDate" placeholder="${expiryDatePlaceholder}" />
-                <form:errors path="expiryDate" class="invalid-feedback" />
+
+                <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
+                    <form:input path="expiryDate" type="text" class="form-control ${status.error ? 'is-invalid' : ''}" id="expiryDate" placeholder="${expiryDatePlaceholder}"/>
+                    <form:errors path="expiryDate" class="invalid-feedback" />
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
             </div>
         </spring:bind>
 
@@ -74,7 +103,7 @@
             <div class="form-group ${status.error ? 'has-danger' : ''}">
                 <label class=""><fmt:message key="document.authority"/></label>
                 <fmt:message key="document.authority_placeholder" var="authorityPlaceholder" />
-                <form:textarea path="authority" rows="5" class="form-control ${status.error ? 'is-invalid' : ''}" id="authority" placeholder="${authorityPlaceholder}" />
+                <form:textarea path="authority" rows="5" class="form-control ${status.error ? 'is-invalid' : ''}" id="authority" placeholder="${authorityPlaceholder}"  htmlEscape="true" />
                 <form:errors path="authority" class="invalid-feedback" />
             </div>
         </spring:bind>

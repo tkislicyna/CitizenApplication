@@ -87,10 +87,6 @@ public class Citizen {
         return documents;
     }
 
-    public void setDocuments(Set<IdentityDocument> documents) {
-        this.documents = documents;
-    }
-
     public String getFullName() {
         return getFirstName() + " " + getMiddleName() + " " + getLastName();
     }

@@ -50,4 +50,9 @@ public class CitizenServiceImpl implements CitizenService {
     public List<Citizen> findAllCitizens() {
         return dao.findAllCitizens();
     }
+
+    @Override
+    public List<Citizen> findCitizensByKeyword(String word) {
+        return dao.findCitizensByKeyword(word);
+    }
 }

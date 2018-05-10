@@ -1,5 +1,6 @@
 package ru.nsk.tkozlova.controllers;
 
+import org.hibernate.validator.valuehandling.UnwrapValidatedValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,13 +12,17 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.HtmlUtils;
 import ru.nsk.tkozlova.controllers.model.CitizenModel;
 import ru.nsk.tkozlova.controllers.model.DocumentModel;
+import ru.nsk.tkozlova.controllers.model.SearchModel;
 import ru.nsk.tkozlova.model.Citizen;
 import ru.nsk.tkozlova.model.IdentityDocument;
 import ru.nsk.tkozlova.services.CitizenService;
 import ru.nsk.tkozlova.validators.CitizenFormValidator;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,17 +35,13 @@ import java.util.List;
 @ComponentScan("ru.nsk.tkozlova")
 public class CitizenController {
 
+    private static final Integer KEYWORD_MIN_LENGTH = 3;
+
     @Autowired
     CitizenService service;
 
     @Autowired
     CitizenFormValidator citizenFormValidator;
-
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(citizenFormValidator);
-    }
-
 
     @RequestMapping(value = {"/list"}, method = RequestMethod.GET)
     public String listPage(ModelMap model) {
@@ -67,7 +68,6 @@ public class CitizenController {
     }
 
 
-    // show update form
     @RequestMapping(value = "/citizen/{id}/update", method = RequestMethod.GET)
     public String showUpdateCitizenForm(@PathVariable("id") int id, Model model) {
         Citizen citizen = service.findById(id);
@@ -84,49 +84,47 @@ public class CitizenController {
         model.setAddress(citizen.getAddress());
         model.setBirthDay(citizen.getBirthDay());
 
-        for (IdentityDocument doc: citizen.getDocuments()) {
+        for (IdentityDocument doc : citizen.getDocuments()) {
             model.getDocuments().add(new DocumentModel(doc.getId(), doc.getType()));
         }
 
         return model;
     }
 
-    // show add form
     @RequestMapping(value = "/citizen/add", method = RequestMethod.GET)
     public String showAddCitisenForm(Model model) {
         model.addAttribute("citizenForm", new CitizenModel());
         return "citizen/add";
     }
 
-    // save or update citizen
     @RequestMapping(value = "/citizen", method = RequestMethod.POST)
     public String addOrUpdateCitizen(@ModelAttribute("citizenForm") @Validated CitizenModel citizenModel,
-                                   BindingResult result, Model model, final RedirectAttributes redirectAttributes) {
+                                     BindingResult result, Model model, final RedirectAttributes redirectAttributes) {
+        citizenFormValidator.validate(citizenModel, result);
+
         if (result.hasErrors()) {
-            //
             return "citizen/form";
         } else {
 
             redirectAttributes.addFlashAttribute("css", "success");
             Citizen citizen = null;
-            if(citizenModel.isNew()){
+            if (citizenModel.isNew()) {
                 redirectAttributes.addFlashAttribute("msg", "message.citizen.is.added");
                 citizen = new Citizen();
                 fullEntityByModel(citizen, citizenModel);
                 service.saveCitizen(citizen);
-            }else{
+            } else {
                 redirectAttributes.addFlashAttribute("msg", "message.citizen.is.updated");
                 citizen = service.findById(citizenModel.getId());
                 fullEntityByModel(citizen, citizenModel);
                 service.updateCitizen(citizen);
             }
 
-            // POST/REDIRECT/GET
             return "redirect:/citizen/" + citizen.getId() + "/view";
         }
     }
 
-    private void fullEntityByModel(Citizen citizen, CitizenModel model){
+    private void fullEntityByModel(Citizen citizen, CitizenModel model) {
         citizen.setFirstName(model.getFirstName());
         citizen.setMiddleName(model.getMiddleName());
         citizen.setLastName(model.getLastName());
@@ -134,7 +132,6 @@ public class CitizenController {
         citizen.setBirthDay(model.getBirthDay());
     }
 
-    // delete citizen
     @RequestMapping(value = "/citizen/{id}/delete", method = RequestMethod.GET)
     public String deleteCitizen(@PathVariable("id") int id, final RedirectAttributes redirectAttributes) {
         service.deleteCitizenById(id);
@@ -145,4 +142,26 @@ public class CitizenController {
         return "redirect:/list";
     }
 
+    @RequestMapping(value = "/citizen/search", method = RequestMethod.POST)
+    public String search(@ModelAttribute("searchForm") SearchModel searchModel, Model model, final RedirectAttributes redirectAttributes) throws UnsupportedEncodingException {
+        String keyword = searchModel.getKeyword();
+        if (keyword == null || keyword.length() < KEYWORD_MIN_LENGTH) {
+            redirectAttributes.addFlashAttribute("css", "warning");
+            redirectAttributes.addFlashAttribute("msg", "message.keyword.valid");
+            return "redirect:/list";
+        }
+
+        List<Citizen> citizens = service.findCitizensByKeyword(keyword);
+        if (citizens.isEmpty()) {
+            model.addAttribute("css", "info");
+            model.addAttribute("msg", "message.keyword.empty_result");
+            model.addAttribute("msgParam", keyword);
+        } else {
+            model.addAttribute("css", "success").addAttribute(keyword);
+            model.addAttribute("msg", "message.keyword.result");
+            model.addAttribute("msgParam", keyword);
+        }
+        model.addAttribute("citizens", citizens);
+        return "list";
+    }
 }

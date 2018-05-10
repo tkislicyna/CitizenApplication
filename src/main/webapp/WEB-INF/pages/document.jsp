@@ -1,11 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <div class="container">
-    <legend><fmt:message key="document.view.title"/></legend>
+    <legend><h1><fmt:message key="document.view.title"/></h1></legend>
 
 
     <c:if test="${not empty msg}">
@@ -22,7 +20,7 @@
             <div class="row">
                 <label class="col-sm-2"><fmt:message key="document.holder"/></label>
                 <c:url var="holderLink"  value="/citizen/${documentForm.holder.id}/view" />
-                <div class="col-sm-10"><a href="${holderLink}">${documentForm.holder.fullName}</a></div>
+                <div class="col-sm-10"><a href="${holderLink}"><c:out value="${documentForm.holder.fullName}" escapeXml="true"/></a></div>
             </div>
 
             <div class="row">
@@ -43,7 +41,7 @@
 
             <div class="row">
                 <label class="col-sm-2"><fmt:message key="document.authority"/></label>
-                <div class="col-sm-10">${documentForm.authority}</div>
+                <div class="col-sm-10"><c:out value="${documentForm.authority}" escapeXml="true"/></div>
             </div>
 
             <br/>

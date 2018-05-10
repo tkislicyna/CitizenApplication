@@ -1,39 +1,35 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 
 <div class="container">
-    <legend><fmt:message key="citizen.view.title"/></legend>
-
-
-        <c:if test="${not empty msg}">
-            <div class="alert alert-${css} alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <strong><fmt:message key="${msg}"/></strong>
-            </div>
-        </c:if>
+    <legend><h1><fmt:message key="citizen.view.title"/></h1></legend>
+    <c:if test="${not empty msg}">
+        <div class="alert alert-${css} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong><fmt:message key="${msg}"/></strong>
+        </div>
+    </c:if>
 
     <div class="row">
         <div class="col-sm-9">
             <div class="row">
                 <label class="col-sm-2"><fmt:message key="citizen.first_name"/></label>
-                <div class="col-sm-10">${citizenForm.firstName}</div>
+                <div class="col-sm-10"><c:out value="${citizenForm.firstName}" escapeXml="true"/></div>
             </div>
 
             <div class="row">
                 <label class="col-sm-2"><fmt:message key="citizen.middle_name"/></label>
-                <div class="col-sm-10">${citizenForm.middleName}</div>
+                <div class="col-sm-10"><c:out value="${citizenForm.middleName}" escapeXml="true"/></div>
             </div>
 
 
             <div class="row">
                 <label class="col-sm-2"><fmt:message key="citizen.last_name"/></label>
-                <div class="col-sm-10">${citizenForm.lastName}</div>
+                <div class="col-sm-10"><c:out value="${citizenForm.lastName}" escapeXml="true"/></div>
             </div>
 
             <div class="row">
@@ -43,15 +39,17 @@
 
             <div class="row">
                 <label class="col-sm-2"><fmt:message key="citizen.address"/></label>
-                <div class="col-sm-10">${citizenForm.address}</div>
+                <div class="col-sm-10"><c:out value="${citizenForm.address}" escapeXml="true"/></div>
             </div>
 
             <br/>
             <c:url var="exitLink"  value="/citizen/${citizenForm.id}/update" />
             <c:url var="deleteLink"  value="/citizen/${citizenForm.id}/delete" />
+            <c:url var="listLink"  value="/list" />
             <div class="">
                 <a role="button" class="btn btn-primary" href="${exitLink}"><fmt:message key="button.update"/></a>
                 <a role="button" class="btn btn-danger" href="${deleteLink}"><fmt:message key="button.delete"/></a>
+                <a role="button" class="btn btn-secondary" href="${listLink}"><fmt:message key="button.back"/></a>
             </div>
         </div>
 

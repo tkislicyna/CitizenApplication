@@ -12,8 +12,6 @@
         <apachetiles.version>3.0.5</apachetiles.version>
         <hibernate.version>4.3.6.Final</hibernate.version>
         <mysql.connector.version>5.0.4</mysql.connector.version>
-        <joda-time.version>2.3</joda-time.version>
-        <testng.version>6.9.4</testng.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
@@ -92,13 +90,6 @@
             <version>${mysql.connector.version}</version>
         </dependency>
 
-        <!-- To map JodaTime with database type -->
-        <dependency>
-            <groupId>org.jadira.usertype</groupId>
-            <artifactId>usertype.core</artifactId>
-            <version>3.0.0.CR1</version>
-        </dependency>
-
         <!-- Servlet+JSP+JSTL -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -116,48 +107,7 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
-
-
-        <!-- Testing dependencies -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${springframework.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
-
-
-
-
-    <!--  <build>
-          <finalName>CitizenApplication</finalName>
-          <plugins>
-              <plugin>
-                  <artifactId>maven-compiler-plugin</artifactId>
-                  <configuration>
-                      <source>1.6</source>
-                      <target>1.6</target>
-                  </configuration>
-              </plugin>
-              <plugin>
-                  <artifactId>maven-surefire-plugin</artifactId>
-                  <configuration>
-                      <includes>
-                          <include>**/*Tests.java</include>
-                      </includes>
-                  </configuration>
-              </plugin>
-          </plugins>
-      </build>-->
 
     <build>
         <finalName>CitizenApplication</finalName>

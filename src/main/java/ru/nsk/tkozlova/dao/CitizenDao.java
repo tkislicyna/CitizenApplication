@@ -20,4 +20,6 @@ public interface CitizenDao {
 
     List<Citizen> findAllCitizens();
 
+    List<Citizen> findCitizensByKeyword(String word);
+
 }

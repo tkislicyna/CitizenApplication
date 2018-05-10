@@ -5,6 +5,7 @@ import ru.nsk.tkozlova.model.Citizen;
 import ru.nsk.tkozlova.model.DocumentType;
 
 import javax.persistence.*;
+import javax.validation.constraints.Past;
 import java.util.Date;
 
 /**
@@ -19,7 +20,7 @@ public class DocumentModel {
 
     private DocumentType type;
 
-    private  String authority;
+    private String authority;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date issueDate;
@@ -27,13 +28,14 @@ public class DocumentModel {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date expiryDate;
 
-    public DocumentModel() {}
+    public DocumentModel() {
+    }
 
-    public DocumentModel (CitizenModel citizenModel) {
+    public DocumentModel(CitizenModel citizenModel) {
         holder = citizenModel;
     }
 
-    public DocumentModel (Integer id, DocumentType type){
+    public DocumentModel(Integer id, DocumentType type) {
         this.id = id;
         this.type = type;
     }
