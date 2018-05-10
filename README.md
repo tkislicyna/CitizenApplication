@@ -25,4 +25,4 @@ Installation
 4. mvn install
 5. move ../target/CitizenApplication.war to Tomcat7/webapps
 6. run Tomcat7/bin/startup.bat for Windows
-7.go to http://localhost:8080/CitizenApplication
+7. go to http://localhost:8080/CitizenApplication
