@@ -3,7 +3,7 @@
 
 <div class="container">
     <hr/>
-    <p>
+    <p class="float-right">
         &copy <fmt:message key="footer.copyright"/>
     </p>
 </div>
