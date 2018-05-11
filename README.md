@@ -6,8 +6,9 @@ Functions:
 2. create, read, delete, update  citizen document info
 3. search for citizen by substring in full name
 
+Frameworks and libraries: Spring MVC, Hibernate, MySql, JSP+JSTL, Tiles, jQuery, Bootstrap
+
 Environment
- 
 1. Java version 8
 2. Maven 3.5.3
 3. MySQL 5.0.51
@@ -18,7 +19,6 @@ Environment
 
 
 Installation
-
 1. install MySQL
 2. execute CitizenApplication\db-schema.sql
 3. unwrap Tomcat7
